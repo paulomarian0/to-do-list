@@ -21,7 +21,7 @@ model User {
 model Task {
   id        Int     @id @default(autoincrement())
   content   String
-  completed Boolean @default(false)
+  completed Int @default(0)
   author    User    @relation(fields: [authorId], references: [id])
   authorId  Int
 }

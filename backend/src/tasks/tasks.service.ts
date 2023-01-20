@@ -20,6 +20,17 @@ export class TasksService {
 
   async findAll(params: QueryParamsTaskDto) {
 
+    if(params.authorId){
+      params.authorId = +params.authorId
+    }
+
+    if(params.completed){
+      params.completed = +params.completed
+    }
+
+    console.log(params.completed)
+    console.log(typeof(params.completed))
+
     const payload = await this.prisma.task.findMany({
       where: params
     })

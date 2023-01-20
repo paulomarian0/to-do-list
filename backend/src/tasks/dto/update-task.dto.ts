@@ -1,1 +1,3 @@
-export class UpdateTaskDto {}
+export class UpdateTaskDto {
+  completed: number
+}

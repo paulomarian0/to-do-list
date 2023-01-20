@@ -1,5 +1,6 @@
 export class QueryParamsTaskDto  {
   id?: number
   content?: string
-  completed?: boolean
+  completed?: number
+  authorId: number
 }

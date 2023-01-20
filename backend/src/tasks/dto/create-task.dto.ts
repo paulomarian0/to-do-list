@@ -1,5 +1,5 @@
 export class CreateTaskDto {
   content: string
-  completed: boolean
+  completed: number
   authorId: number
 }
