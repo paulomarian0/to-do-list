@@ -28,7 +28,7 @@ export default function Login() {
   };
 
   return (
-    <div className="App">
+    <div className="bg-slate-500">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label>Email</label>
