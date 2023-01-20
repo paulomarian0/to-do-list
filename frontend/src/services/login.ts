@@ -1,17 +1,18 @@
 import { api } from "@/libs/axios";
+import { IValuesProps } from "@/types/LoginType";
+import { AxiosResponse } from "axios";
 
-type ValuesProps = {
-  email: string;
-  password: string
-}
-export async function LogIn(data: ValuesProps) {
+export async function LogIn({ email, password }: IValuesProps) {
 
   const payload = await api.post('/login', {
-      email: data.email,
-      password: data.password
+    email,
+    password
   })
-  
+    .then((response: AxiosResponse) => {
+      localStorage.setItem('token', response.data.access_token)
 
+      return response.data;
+    })
 
   return payload;
 }

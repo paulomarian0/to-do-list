@@ -1,20 +1,30 @@
 import { LogIn } from "@/services/login";
 import { useForm } from "react-hook-form";
-
+import { ToastContainer, toast } from 'react-toastify';
+import { useRouter } from 'next/router'
+import 'react-toastify/dist/ReactToastify.css';
+import { IValuesProps } from "@/types/LoginType";
 
 export default function Login() {
+  const router = useRouter()
 
   const {
     register,
     handleSubmit,
   } = useForm();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    LogIn(data)
-      .then((response) => {
-        localStorage.setItem('token', response.data.access_token)
+  const onSubmit = (requestLogin: IValuesProps | any) => {
+
+    LogIn(requestLogin)
+      .then(() => {
+        router.push('/tasks')
       })
+      .catch((error) => {
+        toast.error("Email address or password provided is incorrect.", {
+          position: toast.POSITION.TOP_RIGHT
+        });
+      })
+
   };
 
   return (
@@ -40,6 +50,7 @@ export default function Login() {
           <button type="submit">Submit</button>
         </div>
       </form>
+      <ToastContainer />
     </div>
   );
 }
