@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import { CreateTaskDto } from './dto/create-task.dto';
+import { QueryParamsTaskDto } from './dto/query-params-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 
 @Injectable()
@@ -8,23 +9,42 @@ export class TasksService {
 
   constructor(private prisma: PrismaService) { }
 
-  async create(createTaskDto: CreateTaskDto) {
+  async create(data: CreateTaskDto) {
+
+    const payload = await this.prisma.task.create({
+      data,
+    })
+
+    return payload;
+  }
+
+  async findAll(params: QueryParamsTaskDto) {
+
+    const payload = await this.prisma.task.findMany({
+      where: params
+    })
+
+    return payload;
+  }
+
+  async update(params: QueryParamsTaskDto, data: UpdateTaskDto) {
+    const id = +params.id
+
+    const payload = await this.prisma.task.update({
+      data,
+      where:{id}
+    })
     
+    return payload;
   }
 
-  async findAll() {
-    return `This action returns all tasks`;
-  }
+  async remove(params: QueryParamsTaskDto) {
+    const id = +params.id
 
-  async findOne(id: number) {
-    return `This action returns a #${id} task`;
-  }
-
-  async update(id: number, updateTaskDto: UpdateTaskDto) {
-    return `This action updates a #${id} task`;
-  }
-
-  async remove(id: number) {
-    return `This action removes a #${id} task`;
+    const payload = await this.prisma.task.delete({
+      where:{id}
+    })
+    
+    return payload;
   }
 }
