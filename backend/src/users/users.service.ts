@@ -3,6 +3,7 @@ import { PrismaService } from 'src/database/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt';
+import { QueryParamsUserDto } from './dto/query-params-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -33,21 +34,37 @@ export class UsersService {
     return payload;
   }
 
-  async findAll() {
-    const payload = await this.prisma.user.findMany()
+  async findAll(params: QueryParamsUserDto) {
+    const payload = await this.prisma.user.findMany({
+      where: params
+    })
 
     return payload;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async update(params: QueryParamsUserDto, updateUserDto: UpdateUserDto) {
+    const id = +params.id
+
+    const data: UpdateUserDto = {
+      ...updateUserDto,
+      password: await bcrypt.hash(updateUserDto.password, 10),
+    };
+
+    const payload = await this.prisma.user.update({
+      data,
+      where: { id }
+    })
+
+    return payload;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+  async delete(params: QueryParamsUserDto) {
+    const id = +params.id
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+    const payload = await this.prisma.user.delete({
+      where: { id }
+    })
+
+    return payload;
   }
 }
