@@ -28,9 +28,6 @@ export class TasksService {
       params.completed = +params.completed
     }
 
-    console.log(params.completed)
-    console.log(typeof(params.completed))
-
     const payload = await this.prisma.task.findMany({
       where: params
     })
