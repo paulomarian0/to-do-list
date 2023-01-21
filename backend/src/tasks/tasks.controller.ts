@@ -3,6 +3,7 @@ import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { QueryParamsTaskDto } from './dto/query-params-task.dto';
+import { UpdateStatusTaskDto } from './dto/update-status-task.dto';
 
 @Controller('tasks')
 export class TasksController {
@@ -21,6 +22,11 @@ export class TasksController {
   @Patch()
   update(@Query() params: QueryParamsTaskDto, @Body() data: UpdateTaskDto) {
     return this.tasksService.update(params, data);
+  }
+
+  @Patch('/status')
+  updateStatus(@Query() params: QueryParamsTaskDto, @Body() data: UpdateStatusTaskDto) {
+    return this.tasksService.changeStatus(params, data);
   }
 
   @Delete()

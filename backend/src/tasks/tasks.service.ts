@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { QueryParamsTaskDto } from './dto/query-params-task.dto';
+import { UpdateStatusTaskDto } from './dto/update-status-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 
 @Injectable()
@@ -20,11 +21,11 @@ export class TasksService {
 
   async findAll(params: QueryParamsTaskDto) {
 
-    if(params.authorId){
+    if (params.authorId) {
       params.authorId = +params.authorId
     }
 
-    if(params.completed){
+    if (params.completed) {
       params.completed = +params.completed
     }
 
@@ -39,10 +40,21 @@ export class TasksService {
     const id = +params.id
 
     const payload = await this.prisma.task.update({
-      data,
-      where:{id}
+      where: { id },
+      data
     })
-    
+
+    return payload;
+  }
+
+  async changeStatus(params: QueryParamsTaskDto, data: UpdateStatusTaskDto) {
+    const id = +params.id
+
+    const payload = await this.prisma.task.update({
+      where: { id },
+      data
+    })
+
     return payload;
   }
 
@@ -50,9 +62,9 @@ export class TasksService {
     const id = +params.id
 
     const payload = await this.prisma.task.delete({
-      where:{id}
+      where: { id }
     })
-    
+
     return payload;
   }
 }
