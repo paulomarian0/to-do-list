@@ -1,4 +1,4 @@
-export type IValuesProps = {
-  email: string;
+export type ILoginRequest = {
+  email: string
   password: string
 }

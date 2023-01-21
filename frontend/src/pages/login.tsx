@@ -1,11 +1,12 @@
 import { LogIn } from "@/services/login";
 import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from 'next/router'
 import 'react-toastify/dist/ReactToastify.css';
-import { IValuesProps } from "@/types/LoginType";
+import { ILoginRequest } from "@/types/LoginType";
+import { notification } from "antd";
 
 export default function Login() {
+
   const router = useRouter()
 
   const {
@@ -13,44 +14,48 @@ export default function Login() {
     handleSubmit,
   } = useForm();
 
-  const onSubmit = (requestLogin: IValuesProps | any) => {
+  const onSubmit = (requestLogin: ILoginRequest | any) => {
 
     LogIn(requestLogin)
       .then(() => {
         router.push('/tasks')
       })
       .catch((error) => {
-        toast.error("Email address or password provided is incorrect.", {
-          position: toast.POSITION.TOP_RIGHT
-        });
+        notification.error({ message: error.message });
       })
-
   };
 
   return (
-    <div className="bg-slate-500">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label>Email</label>
+    <div className="bg-slate-500 h-screen	w-full flex justify-center items-center	">
+      <form
+        className="h-2/4 w-2/4 bg-white flex flex-col text-center gap-5 p-5 rounded-lg"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <h3 className="flex justify-start">Login on app</h3>
+        <div className="flex flex-col">
+          <label className="flex justify-start mb-1">Email</label>
           <input
             type="text"
             {...register("email")}
             name="email"
+            className="mb-7 rounded-3xl p-1.5 border-solid border-2 border-black "
           />
-        </div>
-        <div>
-          <label>Password</label>
+          <label className="flex justify-start mb-1">Password</label>
           <input
             type="password"
             {...register("password")}
             name="password"
+            className="mb-5 rounded-3xl p-1.5 border-solid border-2 border-black"
           />
-        </div>
-        <div>
-          <button type="submit">Submit</button>
+          <button
+            className="bg-slate-500 m-auto w-2/4 flex justify-center rounded-3xl p-2 text-white	hover:bg-slate-400"
+            type="submit"
+          >Submit</button>
+          <span>or<a
+            className="underline decoration-1 text-slate-700 hover:text-red-600"
+            href="google.com"> sign up</a></span>
         </div>
       </form>
-      <ToastContainer />
     </div>
   );
 }

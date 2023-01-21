@@ -1,8 +1,9 @@
+import { AuthContext } from "@/contexts/AuthContext";
 import { api } from "@/libs/axios";
-import { IValuesProps } from "@/types/LoginType";
+import { ILoginRequest } from "@/types/LoginType";
 import { AxiosResponse } from "axios";
 
-export async function LogIn({ email, password }: IValuesProps) {
+export async function LogIn({ email, password }: ILoginRequest) {
 
   const payload = await api.post('/login', {
     email,
@@ -10,6 +11,7 @@ export async function LogIn({ email, password }: IValuesProps) {
   })
     .then((response: AxiosResponse) => {
       localStorage.setItem('token', response.data.access_token)
+      localStorage.setItem('authorId', response.data.id)
 
       return response.data;
     })
