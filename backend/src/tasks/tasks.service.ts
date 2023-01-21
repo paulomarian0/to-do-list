@@ -46,7 +46,7 @@ export class TasksService {
     return payload;
   }
 
-  async remove(params: QueryParamsTaskDto) {
+  async delete(params: QueryParamsTaskDto) {
     const id = +params.id
 
     const payload = await this.prisma.task.delete({

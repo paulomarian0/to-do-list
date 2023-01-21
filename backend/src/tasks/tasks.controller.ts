@@ -24,7 +24,7 @@ export class TasksController {
   }
 
   @Delete()
-  remove(@Query() params: QueryParamsTaskDto) {
-    return this.tasksService.remove(params);
+  delete(@Query() params: QueryParamsTaskDto) {
+    return this.tasksService.delete(params);
   }
 }
