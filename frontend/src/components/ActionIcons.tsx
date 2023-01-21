@@ -1,5 +1,6 @@
+import { deleteOneTask } from '@/services/tasks';
 import { DeleteOutlined, EditOutlined, CheckCircleOutlined } from '@ant-design/icons';
-import { Space } from 'antd';
+import { notification, Space } from 'antd';
 
 interface IProps{
   record: {
@@ -23,7 +24,13 @@ export function ActionIcons(props: IProps) {
   }
 
   function clickDelete(){
-    console.log(id)
+    deleteOneTask(id)
+    .then(() => {
+      notification.success({ message: "Task deleted!" });
+    })
+    .catch((error) => {
+      notification.error({ message: error.message });
+    })
   }
   return (
     <Space>

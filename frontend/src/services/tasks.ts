@@ -27,3 +27,14 @@ export async function createNewTask({content} : INewTask, authorId: number){
   return payload;
 
 }
+
+export async function deleteOneTask(id: number) {
+  
+  const payload = await api.delete(`tasks?id=${id}`)
+  .then((response: AxiosResponse) => {
+
+    return response.data;
+  })
+
+  return payload;
+}
