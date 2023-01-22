@@ -28,9 +28,20 @@ export async function createNewTask({content} : INewTask, authorId: number){
 
 }
 
+export async function updateTaskStatus(id:number) {
+  
+  const payload = await api.patch(`/tasks/status?id=${id}`)
+  .then((response: AxiosResponse) => {
+
+    return response.data;
+  })
+
+  return payload;
+}
+
 export async function deleteOneTask(id: number) {
   
-  const payload = await api.delete(`tasks?id=${id}`)
+  const payload = await api.delete(`/tasks?id=${id}`)
   .then((response: AxiosResponse) => {
 
     return response.data;

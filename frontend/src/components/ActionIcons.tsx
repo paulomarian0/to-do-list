@@ -1,4 +1,4 @@
-import { deleteOneTask } from '@/services/tasks';
+import { deleteOneTask, updateTaskStatus } from '@/services/tasks';
 import { DeleteOutlined, EditOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import { notification, Space } from 'antd';
 
@@ -13,14 +13,17 @@ interface IProps{
 
 export function ActionIcons(props: IProps) {
 
+  
   const {completed, content, id} = props.record
 
   function clickCheck(){
-    console.log(id)
-  }
-
-  function clickEdit(){
-    console.log(id)
+    updateTaskStatus(id)
+    .then(() => {
+      notification.success({ message: "Status changed!" });
+    })
+    .catch((error) => {
+      notification.error({ message: error.message });
+    })
   }
 
   function clickDelete(){
@@ -35,7 +38,6 @@ export function ActionIcons(props: IProps) {
   return (
     <Space>
       <CheckCircleOutlined onClick={clickCheck}/>
-      <EditOutlined onClick={clickEdit}/>
       <DeleteOutlined onClick={clickDelete}/>
     </Space>
   )

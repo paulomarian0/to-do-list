@@ -26,6 +26,7 @@ export default function Tasks() {
       title: 'Status',
       dataIndex: 'completed',
       key: 'completed',
+      width: '20%',
       render: (text: any) =>
         text === 1 ?
           <CheckOutlined /> : <ClockCircleOutlined />
@@ -34,6 +35,7 @@ export default function Tasks() {
       title: 'Content',
       dataIndex: 'content',
       key: 'content',
+      width: '70%',
       render: (text: any, record: any) =>
         record.completed === 1 ?
           <span className="line-through">
@@ -44,10 +46,9 @@ export default function Tasks() {
     },
     {
       title: 'Action',
-      render: (text: any, record: any) =>
-      (
+      width: '10%',
+      render: (_: any, record: any) =>
       <ActionIcons record={record}/>
-      )
     }
   ];
 
@@ -63,6 +64,7 @@ export default function Tasks() {
         columns={columns}
         rowKey="id"
       />
+
     </div>
 
   )
