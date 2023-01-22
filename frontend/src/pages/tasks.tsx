@@ -1,16 +1,19 @@
 import { getAllTasks } from "@/services/tasks";
 import { IGetTasks } from "@/types/GetTasksType";
 import {  Table } from "antd";
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { CheckOutlined, ClockCircleOutlined } from '@ant-design/icons';
 import { FormNewTask } from "@/components/FormNewTask";
 import { ActionIcons } from "@/components/ActionIcons";
+import { AuthContext } from "@/contexts/AuthContext";
 
 export default function Tasks() {
 
   const [lstTasks, setLstTasks] = useState<IGetTasks[]>([]);
 
+  const {needUpdate, setNeedUpdate} = useContext(AuthContext);
 
+  console.log(needUpdate)
 
   useEffect(() => {
     const id = Number(localStorage.getItem('authorId'))
@@ -18,8 +21,10 @@ export default function Tasks() {
     getAllTasks(id)
       .then((response) => {
         setLstTasks(response)
+
+        setNeedUpdate(false)
       })
-  }, [])
+  }, [needUpdate])
 
   const columns = [
     {
