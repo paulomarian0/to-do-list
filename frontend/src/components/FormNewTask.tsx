@@ -7,13 +7,15 @@ import { ToastContainer, toast } from 'react-toastify';
 
 export function FormNewTask() {
 
-  const { id, setId } = useContext(AuthContext);
+  const { id, setId, setNeedUpdate } = useContext(AuthContext);
 
   const onFinish = (values: INewTask) => {
 
     createNewTask(values, +id)
       .then(() => {
         notification.success({ message: "New task added!" });
+
+        setNeedUpdate(true);
       })
       .catch((error) => {
         notification.error({ message: error.message });
@@ -26,19 +28,15 @@ export function FormNewTask() {
   }, [])
 
   return (
-    <>
-
-      <Form
-        onFinish={onFinish}
-        className="w-2/4 flex flex-row">
-        <Form.Item name="content">
-          <Input placeholder="New Task..." />
-        </Form.Item>
-        <Form.Item>
-          <Button htmlType="submit" className="bg-red-300">Submit</Button>
-        </Form.Item>
-      </Form>
-      <ToastContainer />
-    </>
+    <Form
+      onFinish={onFinish}
+      className="w-2/4 flex flex-row justify-center">
+      <Form.Item name="content">
+        <Input placeholder="New Task..." />
+      </Form.Item>
+      <Form.Item>
+        <Button htmlType="submit" className="bg-red-300">Submit</Button>
+      </Form.Item>
+    </Form>
   )
 }

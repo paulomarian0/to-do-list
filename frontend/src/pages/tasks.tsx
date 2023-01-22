@@ -13,8 +13,6 @@ export default function Tasks() {
 
   const {needUpdate, setNeedUpdate} = useContext(AuthContext);
 
-  console.log(needUpdate)
-
   useEffect(() => {
     const id = Number(localStorage.getItem('authorId'))
 
@@ -69,7 +67,6 @@ export default function Tasks() {
         columns={columns}
         rowKey="id"
       />
-
     </div>
 
   )
