@@ -28,7 +28,7 @@ export default function Login() {
   return (
     <div className="bg-slate-500 h-screen	w-full flex justify-center items-center	">
       <form
-        className="h-2/4 w-2/4 bg-white flex flex-col text-center gap-5 p-5 rounded-lg"
+        className="h-2/4 w-2/4 bg-white flex flex-col text-center gap-5 p-5 rounded-lg rounded-2xl border-black	border-2"
         onSubmit={handleSubmit(onSubmit)}
       >
         <h3 className="flex justify-start">Login on app</h3>
@@ -38,7 +38,7 @@ export default function Login() {
             type="text"
             {...register("email")}
             name="email"
-            className="mb-7 rounded-3xl p-1.5 border-solid border-2 border-black "
+            className="mb-7 rounded-3xl p-1.5 border-solid border-2 border-black"
           />
           <label className="flex justify-start mb-1">Password</label>
           <input
@@ -53,7 +53,7 @@ export default function Login() {
           >Submit</button>
           <span>or<a
             className="underline decoration-1 text-slate-700 hover:text-red-600"
-            href="google.com"> sign up</a></span>
+            href="/signin"> sign up</a></span>
         </div>
       </form>
     </div>
