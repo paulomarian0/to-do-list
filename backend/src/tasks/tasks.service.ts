@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { QueryParamsTaskDto } from './dto/query-params-task.dto';
-import { UpdateStatusTaskDto } from './dto/update-status-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 
 @Injectable()
@@ -47,12 +46,22 @@ export class TasksService {
     return payload;
   }
 
-  async changeStatus(params: QueryParamsTaskDto, data: UpdateStatusTaskDto) {
+  async changeStatus(params: QueryParamsTaskDto) {
     const id = +params.id
+
+    const taskStatus = await this.prisma.task.findUnique({
+      where: { id }
+    })
+
+    let newStatus: number
+
+    taskStatus.completed === 0 ? newStatus = 1 : newStatus = 0;
 
     const payload = await this.prisma.task.update({
       where: { id },
-      data
+      data: {
+        completed: newStatus
+      }
     })
 
     return payload;
